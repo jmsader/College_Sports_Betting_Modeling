@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source qprojenv/bin/activate
+python src/find_strats.py || python3 src/find_strats.py

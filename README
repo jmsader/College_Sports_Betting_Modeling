@@ -1,0 +1,16 @@
+Sports betting strategy development and evaluation tool
+
+FIRST:
+cd bin
+./setup
+
+INPUTS:
+in inputs folder
+Must supply API key from "sportsdata.io"
+create a file called "api_key.txt" and insert only the raw key
+"ignored markets" are optional
+An ignored market can only be one of: "cbb", "cfb","nfl", "mlb", "nba", or "nhl"
+to ignore markets, create a file called "ignored_markets.txt" and insert one ignored market (ex. cbb) per line 
+
+TO RUN:
+./bin/find_strats

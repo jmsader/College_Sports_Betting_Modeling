@@ -1,0 +1,12 @@
+#!/bin/bash
+
+mkdir -p inputs/
+if [ ! -f api_key.txt ]; then
+    touch inputs/api_key.txt
+fi
+if [ ! -f ignored_markets.txt ]; then
+    touch inputs/ignored_markets.txt
+fi
+
+source qprojenv/bin/activate
+pip install -r requirements.txt || pip3 install -r requirements.txt
