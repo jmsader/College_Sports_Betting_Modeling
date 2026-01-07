@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from GLOBS import DB_SLUG, trim_markets, INPUT_SLUG
+from GLOBS import DB_SLUG, trim_markets
 import scipy.stats as stats
 from scipy.stats import norm
 import matplotlib.pyplot as plt
@@ -16,8 +16,10 @@ WIN_STRATS = [True, False]
 BET_AGAINST_MOM = [True, False]
 
 VERIFY_PROP = 1 / 4.0
-TRAINING_RAND_ITS = input("Enter the number of training iterations (suggested 50): ")
-VERIFY_RAND_ITS = input("Enter the number of testing iterations (suggested 250): ")
+TRAINING_RAND_ITS = int(
+    input("Enter the number of training iterations (suggested 50): ")
+)
+VERIFY_RAND_ITS = int(input("Enter the number of testing iterations (suggested 250): "))
 
 
 def american_to_decimal(odds_int):
@@ -264,7 +266,6 @@ def get_train_results():
                             win_strat,
                             bet_against_mom,
                             teams_f,
-                            random_seed=seed,
                         )
                         all_samp_rets = (
                             np.concatenate(
@@ -328,7 +329,6 @@ for market, params in train_res_d.items():
             win_strat,
             bet_against_mom,
             teams_bootstrap,
-            random_seed=None,
         )
         market_games, market_return_it, market_ret_rand_it = get_market_games_and_rets(
             team_d
@@ -371,7 +371,6 @@ for market, params in train_res_d.items():
             win_strat,
             bet_against_mom,
             teams_bootstrap,
-            random_seed=None,
         )
         for d in team_d.values():
             all_strat_rets.extend(d["samp_rets"])
@@ -405,7 +404,7 @@ for market, params in train_res_d.items():
     market_d["total_bets"] = market_games
     market_d["bet_against_mom"] = bet_against_mom
 
-    OUT_PATH = "../out/"
+    OUT_PATH = "out/"
     PLOTS_PATH = f"{OUT_PATH}plots/"
 
     # Plot histogram
@@ -441,5 +440,5 @@ for market, params in train_res_d.items():
 
     results_d[market] = market_d
 
-with open(f"{OUT_PATH}results.txt", "w") as o:
+with open(f"{OUT_PATH}results.json", "w") as o:
     json.dump(results_d, o, separators=(",", ": "), indent=3)

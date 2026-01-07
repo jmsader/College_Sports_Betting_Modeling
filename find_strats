@@ -1,4 +1,12 @@
 #!/bin/bash
 
+
 source qprojenv/bin/activate
-python src/find_strats.py || python3 src/find_strats.py
+
+if [[ "$1" == "--fetch" ]]; then
+    python src/fetch_data.py || python3 src/fetch_data.py
+    echo "Data fetched. Now running analysis..."
+fi
+
+python src/analyse.py || python3 src/analyse.py
+echo "Analysis results have been saved to the out directory."

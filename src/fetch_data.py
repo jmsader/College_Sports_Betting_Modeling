@@ -23,7 +23,7 @@ MARKETS = trim_markets()
 with sqlite3.connect(DB_SLUG) as conn:
     conn.executescript(
         """
-                        CREATE TABLE teams (
+                        CREATE TABLE IF NOT EXISTS teams (
                                 tid,
                                 momentum_wins INTEGER DEFAULT 0,
                                 momentum_losses INTEGER DEFAULT 0,
@@ -31,7 +31,7 @@ with sqlite3.connect(DB_SLUG) as conn:
                                 mkt TEXT,
                                 PRIMARY KEY (tid, mkt)
                         );
-                            CREATE TABLE games (
+                            CREATE TABLE IF NOT EXISTS games (
                                 gid INTEGER PRIMARY KEY,
                                 unix INTEGER,
                                 hid INTEGER NOT NULL,
@@ -59,12 +59,9 @@ with sqlite3.connect(DB_SLUG) as conn:
             else:
                 req_str = f"https://api.sportsdata.io/v3/{market}/stats/json/ScoresFinal/{year}?key={API_KEY}"
 
-            print(req_str)
             resp = requests.get(req_str).json()
             if type(resp) == dict:
                 break
-            with open(f"resp_archive/{req_str.replace('/','')}.json", "w") as log:
-                log.write(str(resp))
             for game in resp:
                 if game.get("Status", "Final") != "Final":
                     continue

@@ -12,4 +12,11 @@ An ignored market can only be one of: "cbb", "cfb","nfl", "mlb", "nba", or "nhl"
 to ignore markets, create a file called "ignored_markets.txt" and insert one ignored market (ex. cbb) per line 
 
 TO RUN:
-./find_strats
+./find_strats [option if desired]
+you will be prompted for some input in the terminal
+
+OPTION:
+--fetch to update data (updating uses API credits) (default is no fetch)
+
+TROUBLESHOOTING:
+you may need to run: chmod +x setup and/or: chmod +x find_strats to grant yourself permissions
